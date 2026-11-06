@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="km"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRD-HR-Management (Demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#e8f1fd;--bg2:#f6faff;--gl:rgba(255,255,255,.7);--bd:rgba(120,160,220,.35);--tx:#12233a;--mu:#5f7189;--ac:#1f6fe5;--ac2:#4aa3ff;--ok:#16a34a;--wa:#d97706;--er:#dc2626;--sh:0 8px 30px rgba(40,90,170,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0c1626;--bg2:#101d33;--gl:rgba(28,44,70,.7);--bd:rgba(110,150,210,.25);--tx:#e6eefb;--mu:#93a6c2;--ac:#4a9bff;--ac2:#7cc0ff;--ok:#4ade80;--wa:#fbbf24;--er:#f87171;--sh:0 8px 30px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{--bg1:#0c1626;--bg2:#101d33;--gl:rgba(28,44,70,.7);--bd:rgba(110,150,210,.25);--tx:#e6eefb;--mu:#93a6c2;--ac:#4a9bff;--ac2:#7cc0ff;--ok:#4ade80;--wa:#fbbf24;--er:#f87171;--sh:0 8px 30px rgba(0,0,0,.35);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Noto Sans Khmer",system-ui,sans-serif;color:var(--tx);background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;line-height:1.6}
+.app{display:grid;grid-template-columns:230px 1fr;max-width:1200px;margin:0 auto;gap:16px;padding:16px}
+.glass{background:var(--gl);border:1px solid var(--bd);border-radius:18px;box-shadow:var(--sh);backdrop-filter:blur(12px)}
+.side{padding:16px;position:sticky;top:16px;height:fit-content}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;color:#fff;font-size:1.2rem}
+.brand b{display:block;font-size:.95rem}.brand small{color:var(--mu);font-size:.72rem}
+.nav button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:0;background:none;color:var(--tx);font:inherit;padding:10px 12px;border-radius:12px;cursor:pointer}
+.nav button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-weight:600}
+.demo{margin-top:14px;font-size:.72rem;color:var(--mu);border-top:1px solid var(--bd);padding-top:10px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+h1{font-size:1.25rem;margin:0}.sub{color:var(--mu);font-size:.85rem}
+.user{padding:8px 14px;font-size:.85rem;display:flex;gap:8px;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:12px}
+.stat{padding:14px}.stat .k{color:var(--mu);font-size:.78rem}.stat .v{font-size:1.7rem;font-weight:700}
+.two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.pan{padding:16px}.pan h3{margin:0 0 10px;font-size:1rem}
+.bar{display:grid;grid-template-columns:minmax(100px,38%) 1fr 30px;gap:8px;align-items:center;font-size:.82rem;margin:7px 0}
+.bar i{display:block;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.ev{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd);font-size:.85rem}
+.ev:last-child{border:0}.ev span:first-child{font-size:1.2rem}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+input,select{font:inherit;padding:8px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--gl);color:var(--tx)}
+input{flex:1;min-width:160px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{padding:10px 12px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--bd)}
+th{color:var(--mu);font-weight:600;font-size:.78rem}tbody tr{cursor:pointer}tbody tr:hover{background:rgba(74,163,255,.1)}
+.av{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-size:.8rem;margin-right:8px;vertical-align:middle}
+.chip{padding:2px 10px;border-radius:99px;font-size:.74rem;font-weight:600;background:rgba(31,111,229,.14);color:var(--ac)}
+.chip.ok{background:rgba(22,163,74,.15);color:var(--ok)}.chip.wa{background:rgba(217,119,6,.16);color:var(--wa)}.chip.er{background:rgba(220,38,38,.14);color:var(--er)}
+.lv{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--bd)}
+.lv:last-child{border:0}.lv small{color:var(--mu)}
+.btn{border:0;border-radius:10px;padding:6px 14px;font:inherit;font-size:.82rem;cursor:pointer;color:#fff;background:var(--ok)}.btn.no{background:var(--er)}
+dialog{border:1px solid var(--bd);border-radius:18px;background:var(--bg2);color:var(--tx);max-width:440px;width:92%;padding:20px}
+dialog::backdrop{background:rgba(10,20,40,.45)}
+dl{display:grid;grid-template-columns:120px 1fr;gap:6px 10px;font-size:.86rem;margin:14px 0}dt{color:var(--mu)}dd{margin:0}
+.x{border:0;background:var(--ac);color:#fff;border-radius:10px;padding:8px 18px;font:inherit;cursor:pointer}
+@media(max-width:760px){.app{grid-template-columns:1fr;padding:12px 12px 84px}
+.side{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));top:auto;z-index:5;padding:6px}
+.brand,.demo{display:none}.nav{display:flex;gap:4px}.nav button{flex-direction:column;gap:0;font-size:.7rem;padding:6px 4px;text-align:center}}
+@media(max-width:760px){.nav{overflow-x:auto}.nav button{flex:0 0 auto;min-width:68px}}
+.mx td,.mx th{text-align:center}.mx td:first-child,.mx th:first-child{text-align:left}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cd{min-height:72px;padding:4px;border:1px solid var(--bd);border-radius:10px;font-size:.72rem;cursor:pointer;overflow:hidden}.cd:hover{background:rgba(74,163,255,.1)}.cd b{display:block;font-size:.8rem}.cd .chip{display:block;margin:1px 0;padding:0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.we{opacity:.55}.td{outline:2px solid var(--ac)}.cal .h{text-align:center;color:var(--mu);font-size:.75rem}.cd small{color:var(--mu)}
+@media(max-width:760px){.cd{min-height:58px;font-size:.65rem}.cd .chip{padding:0 3px}}
+
+/* ===== Clean Enterprise refresh: Dashboard + Sidebar ===== */
+:root{
+ --bg1:#f8fafc;--bg2:#f8fafc;--gl:#ffffff;--bd:#e2e8f0;
+ --tx:#1e293b;--mu:#64748b;--ac:#2563eb;--ac2:#2563eb;
+ --ok:#16a34a;--wa:#d97706;--er:#dc2626;
+ --sh:0 1px 3px rgba(15,23,42,.05),0 1px 2px rgba(15,23,42,.03);
+}
+body{background:#f8fafc;color:var(--tx);line-height:1.65}
+.app{max-width:1440px;grid-template-columns:248px minmax(0,1fr);gap:24px;padding:24px}
+.glass{background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:var(--sh);backdrop-filter:none}
+.side{background:#172554;color:#e2e8f0;border:0;border-radius:16px;padding:18px 14px;top:24px;min-height:calc(100vh - 48px);box-shadow:0 8px 24px rgba(15,23,42,.10)}
+.brand{padding:4px 7px 18px;margin-bottom:12px;border-bottom:1px solid rgba(226,232,240,.16)}
+.logo{width:42px;height:42px;border-radius:12px;background:#2563eb;font-size:1.15rem}
+.brand b{color:#fff;font-size:1rem;letter-spacing:.2px}
+.brand small{color:#a5b4fc;font-size:.72rem}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav-group{margin:14px 8px 5px;color:#94a3b8;font-size:.68rem;font-weight:700;letter-spacing:.6px}
+.nav button{color:#cbd5e1;border-radius:9px;padding:10px 11px;font-size:.84rem;transition:background .15s,color .15s}
+.nav button span:first-child{width:23px;text-align:center;font-size:1rem}
+.nav button:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav button.on{background:#2563eb;color:#fff;font-weight:700;box-shadow:0 3px 8px rgba(37,99,235,.22)}
+.demo{color:#94a3b8;border-color:rgba(226,232,240,.16);line-height:1.7}
+main{min-width:0}
+.top{align-items:center;margin-bottom:22px}
+h1{font-size:1.35rem;font-weight:700;letter-spacing:-.2px}
+.sub{color:#64748b}
+.user{border:1px solid #e2e8f0;border-radius:10px;padding:7px 11px;box-shadow:none}
+.user select{border:0;background:transparent;padding:3px 4px}
+.stat{padding:17px 18px;position:relative;overflow:hidden}
+.stat .k{color:#64748b;font-size:.78rem;font-weight:600}
+.stat .v{font-size:1.8rem;line-height:1.3;margin-top:5px;color:#0f172a}
+.stat .stat-icon{position:absolute;right:16px;top:16px;width:36px;height:36px;border-radius:10px;background:#eff6ff;color:#2563eb;display:grid;place-items:center;font-size:1.1rem}
+.stat .stat-note{font-size:.7rem;color:#64748b;margin-top:5px}
+.dash-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.dash-head h2{font-size:1rem;margin:0;color:#0f172a}
+.dash-head p{font-size:.78rem;color:#64748b;margin:3px 0 0}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.dash-panels{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:14px}
+.dash-panel{padding:18px}
+.dash-panel h3{font-size:.92rem;color:#0f172a;margin:0}
+.panel-sub{font-size:.74rem;color:#64748b;margin:3px 0 14px}
+.dept-row{display:grid;grid-template-columns:minmax(125px,1.1fr) minmax(80px,2fr) 28px;gap:10px;align-items:center;margin:13px 0;font-size:.78rem}
+.dept-track{height:8px;background:#f1f5f9;border-radius:20px;overflow:hidden}
+.dept-track i{display:block;height:100%;border-radius:20px;background:#3b82f6}
+.dept-count{text-align:right;color:#334155;font-weight:700}
+.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:15px}
+.quick-link{cursor:pointer;display:flex;align-items:center;gap:9px;padding:11px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#334155;font-size:.78rem;font-weight:600}
+.quick-link:hover{border-color:#93c5fd;background:#f8fbff}.quick-link:focus{outline:2px solid #93c5fd}.quick-link span{width:28px;height:28px;display:grid;place-items:center;background:#eff6ff;border-radius:8px;color:#2563eb}
+.dash-activity{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid #f1f5f9;font-size:.78rem}
+.dash-activity:last-child{border:0}
+.activity-dot{width:8px;height:8px;border-radius:50%;background:#3b82f6;margin:7px 2px 0;flex:none}
+.activity-time{font-size:.68rem;color:#94a3b8;margin-top:2px}
+.dash-alert{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:.78rem}
+.dash-alert:last-child{border:0}
+.alert-ico{width:30px;height:30px;display:grid;place-items:center;background:#f1f5f9;border-radius:9px;flex:none}
+.chip{font-size:.7rem}
+@media(max-width:980px){.dash-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-panels{grid-template-columns:1fr}}
+@media(max-width:760px){
+ .app{grid-template-columns:1fr;padding:12px 12px 86px;gap:12px}
+ .side{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));top:auto;z-index:5;min-height:0;padding:7px 8px;border-radius:13px}
+ .brand,.demo,.nav-group{display:none}
+ .nav{display:flex;flex-direction:row;gap:4px;overflow-x:auto;scrollbar-width:none}
+ .nav button{flex:1 0 62px;min-width:62px;flex-direction:column;gap:1px;padding:6px 3px;text-align:center;font-size:.65rem}
+ .nav button span:first-child{width:auto;font-size:1rem}
+ .top{margin-bottom:14px}
+ .dash-kpis{gap:8px}
+ .stat{padding:13px}
+ .stat .v{font-size:1.45rem}
+ .stat .stat-icon{width:29px;height:29px;right:10px;top:10px;font-size:.9rem}
+ .dash-panel{padding:14px}
+}
+
+
+
+/* ===== GLASSY DASHBOARD V7 · PREMIUM GLASSMORPHISM ===== */
+:root{
+ --bg1:#f4f0ff;--bg2:#edf4ff;--gl:rgba(255,255,255,.62);
+ --bd:rgba(255,255,255,.78);--tx:#242044;--mu:#777391;
+ --ac:#7857e8;--ac2:#a78bfa;--ok:#16a878;--wa:#e5a13b;--er:#e35d79;
+ --sh:0 18px 55px rgba(82,64,150,.12),inset 0 1px 0 rgba(255,255,255,.8);
+}
+html{background:#f3efff}
+body{
+ background:
+  radial-gradient(ellipse at 8% 8%,rgba(183,160,255,.42),transparent 34%),
+  radial-gradient(ellipse at 92% 18%,rgba(139,190,255,.34),transparent 32%),
+  radial-gradient(ellipse at 60% 95%,rgba(255,190,224,.25),transparent 36%),
+  linear-gradient(135deg,#f7f4ff 0%,#eef3ff 48%,#f8f4ff 100%);
+ background-attachment:fixed;color:#282344;
+}
+body:before,body:after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(2px);pointer-events:none}
+body:before{width:360px;height:360px;top:18%;right:-120px;background:rgba(167,139,250,.13)}
+body:after{width:300px;height:300px;bottom:-100px;left:18%;background:rgba(111,173,255,.12)}
+.app{max-width:1540px;grid-template-columns:258px minmax(0,1fr);gap:22px;padding:22px}
+.glass{background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.82);border-radius:21px;box-shadow:0 16px 42px rgba(74,61,130,.10),inset 0 1px 0 rgba(255,255,255,.92);backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%)}
+.side{background:linear-gradient(155deg,rgba(48,37,91,.94),rgba(65,48,125,.91) 55%,rgba(82,65,145,.90));border:1px solid rgba(255,255,255,.2);box-shadow:0 22px 55px rgba(45,31,94,.24),inset 0 1px 0 rgba(255,255,255,.18);border-radius:23px;padding:20px 15px;top:22px;min-height:calc(100vh - 44px);backdrop-filter:blur(24px)}
+.brand{padding:5px 8px 20px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.16)}
+.logo{width:45px;height:45px;border-radius:15px;background:linear-gradient(145deg,#bba7ff,#7857e8 60%,#5a45b8);box-shadow:0 8px 22px rgba(157,128,255,.4),inset 0 1px 0 rgba(255,255,255,.55)}
+.brand b{font-size:1.02rem;letter-spacing:.4px}.brand small{color:#c7bbf5}
+.nav-group{margin:17px 10px 7px;color:#b9addf;font-size:.65rem;letter-spacing:1.2px}
+.nav button{color:rgba(245,242,255,.82);border-radius:13px;padding:11px 12px;font-size:.83rem;transition:all .22s ease}
+.nav button span:first-child{width:25px;text-align:center;font-size:1.04rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.12))}
+.nav button:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateX(2px)}
+.nav button.on{background:linear-gradient(110deg,rgba(180,157,255,.34),rgba(255,255,255,.18));border:1px solid rgba(255,255,255,.24);color:#fff;box-shadow:0 8px 20px rgba(20,12,60,.18),inset 0 1px 0 rgba(255,255,255,.2)}
+.demo{color:#c7bbeb;border-color:rgba(255,255,255,.16)}
+main{min-width:0}.top{margin-bottom:22px;align-items:center}
+h1{font-size:1.48rem;font-weight:750;letter-spacing:-.5px;color:#292148}
+.sub{color:#817b9c}.user{border:1px solid rgba(255,255,255,.9);border-radius:14px;padding:8px 13px;background:rgba(255,255,255,.58);box-shadow:0 8px 24px rgba(76,62,135,.08);backdrop-filter:blur(16px)}
+.user select{color:#574a83}
+.dash-head{margin-bottom:17px}.dash-head h2{font-size:1.05rem;color:#302650}.dash-head p{color:#8882a2}
+.dash-kpis{gap:14px;margin-bottom:16px}
+.stat{padding:19px 20px;border-radius:20px;position:relative;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease}
+.stat:hover,.dash-panel:hover{transform:translateY(-2px);box-shadow:0 22px 50px rgba(83,66,150,.15),inset 0 1px 0 rgba(255,255,255,.95)}
+.stat:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-35px;bottom:-58px;background:linear-gradient(135deg,rgba(167,139,250,.16),rgba(125,170,255,.04));pointer-events:none}
+.stat .k{color:#817b9c;font-size:.77rem;font-weight:650}.stat .v{font-size:1.95rem;color:#302650;letter-spacing:-.7px;margin-top:7px}
+.stat .stat-icon{width:42px;height:42px;right:17px;top:17px;border-radius:14px;background:linear-gradient(145deg,rgba(174,151,255,.23),rgba(133,165,255,.15));border:1px solid rgba(255,255,255,.8);color:#795be0;font-size:1.16rem;box-shadow:0 5px 14px rgba(120,87,232,.09)}
+.stat .stat-note{color:#9690ad;font-size:.69rem}
+.dash-panels{gap:15px}.dash-panel{padding:20px;border-radius:21px;transition:transform .22s ease,box-shadow .22s ease}
+.dash-panel h3{color:#332852;font-size:.96rem}.panel-sub{color:#8b85a5}
+.dept-track{background:rgba(122,106,174,.10);height:9px}.dept-track i,.bar i{background:linear-gradient(90deg,#8060e8,#a78bfa 55%,#8ab9ff);box-shadow:0 2px 8px rgba(128,96,232,.18)}
+.dept-count{color:#55477d}.quick-link{border:1px solid rgba(255,255,255,.92);border-radius:13px;background:rgba(255,255,255,.48);color:#51466f;box-shadow:0 5px 15px rgba(74,61,130,.04);transition:all .2s ease}
+.quick-link:hover{border-color:rgba(153,127,239,.55);background:rgba(255,255,255,.82);transform:translateY(-2px);box-shadow:0 8px 18px rgba(100,77,180,.1)}
+.quick-link span{background:linear-gradient(145deg,#eee9ff,#e5edff);color:#7657d8;border-radius:9px}
+.dash-activity,.dash-alert,.ev,.lv{border-color:rgba(126,112,169,.13)}
+.activity-dot{background:#9274ee;box-shadow:0 0 0 4px rgba(146,116,238,.12)}
+.alert-ico{background:linear-gradient(145deg,rgba(231,224,255,.8),rgba(225,236,255,.75));border:1px solid rgba(255,255,255,.9)}
+.chip{border-radius:99px;background:rgba(132,105,226,.13);color:#7557d5;padding:3px 10px}
+.chip.ok{background:rgba(22,168,120,.12);color:#11956a}.chip.wa{background:rgba(229,161,59,.15);color:#b8791e}.chip.er{background:rgba(227,93,121,.13);color:#d34e70}
+input,select,textarea{border:1px solid rgba(151,135,197,.22);border-radius:12px;background:rgba(255,255,255,.62);color:#342a55;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#a58bea;box-shadow:0 0 0 3px rgba(142,112,226,.12)}
+.tw{border-radius:19px;box-shadow:0 16px 42px rgba(74,61,130,.09)}
+table{color:#44395f}th{color:#8c85a5}th,td{border-bottom:1px solid rgba(126,112,169,.13)}tbody tr:hover{background:rgba(153,128,239,.07)}
+.av{background:linear-gradient(145deg,#ad98f7,#7254d5);box-shadow:0 4px 10px rgba(114,84,213,.18)}
+.btn{background:linear-gradient(110deg,#19aa7a,#36c69a);box-shadow:0 4px 12px rgba(25,170,122,.18)}.btn.no{background:linear-gradient(110deg,#dc5475,#ef8299);box-shadow:0 4px 12px rgba(220,84,117,.16)}
+.x{background:linear-gradient(110deg,#7857e8,#9a7df1);border-radius:12px;box-shadow:0 6px 16px rgba(120,87,232,.2)}
+dialog{background:rgba(250,248,255,.94);border:1px solid rgba(255,255,255,.9);box-shadow:0 24px 70px rgba(41,29,86,.25);backdrop-filter:blur(22px)}dialog::backdrop{background:rgba(35,25,68,.35);backdrop-filter:blur(5px)}
+.cal .cd{background:rgba(255,255,255,.34);border-color:rgba(151,135,197,.18);border-radius:12px}.cal .cd:hover{background:rgba(255,255,255,.75)}.cal .td{outline:2px solid #9477e9;background:rgba(166,143,246,.12)}
+@media(max-width:980px){.app{gap:16px}.dash-kpis{gap:10px}}
+@media(max-width:760px){
+ .app{padding:12px 12px 92px;gap:12px}
+ .side{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));top:auto;min-height:0;padding:7px 8px;border-radius:17px;background:rgba(48,37,91,.92);backdrop-filter:blur(24px);box-shadow:0 12px 35px rgba(45,31,94,.3)}
+ .nav button{border-radius:11px}.nav button.on{background:rgba(183,160,255,.3)}
+ h1{font-size:1.2rem}.stat{padding:14px;border-radius:16px}.stat .v{font-size:1.5rem}.stat .stat-icon{width:31px;height:31px;right:10px;top:10px;font-size:.9rem}
+ .dash-panel{padding:15px;border-radius:17px}.glass{border-radius:17px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+
+</style></head><body>
+<div class="app">
+<aside class="glass side"><div class="brand"><div class="logo">💧</div><div><b>PRD-HR</b><small>PSMD-Digital</small></div></div>
+<nav class="nav" id="nav"></nav>
+<div class="demo">ទិន្នន័យក្នុងទំព័រនេះជាគំរូ (Demo) ប៉ុណ្ណោះ</div></aside>
+<main>
+<div class="top"><div><h1 id="ttl"></h1><div class="sub">កម្មវិធីគ្រប់គ្រងធនធានមនុស្ស · PRD-HR-Management</div></div>
+<div class="glass user">👤 <select id="role"></select></div></div>
+<section id="v"></section>
+</main></div>
+<dialog id="dg"><div id="dc"></div><button class="x" onclick="dg.close()">បិទ</button></dialog>
+<script>
+const $=s=>document.querySelector(s);
+const P=[
+["PPWSA-0001","សុខ វិចិត្រ","SOK VICHET","ប្រុស",41,"ប្រធាននាយកដ្ឋាន","នាយកដ្ឋាន","ក្របខណ្ឌ","បរិញ្ញាបត្រជាន់ខ្ពស់","012 000 001","18"],
+["PPWSA-0002","ជា សុភាព","CHEA SOPHEAP","ស្រី",36,"អនុប្រធាននាយកដ្ឋាន","រដ្ឋបាល","ក្របខណ្ឌ","បរិញ្ញាបត្រ","012 000 002","12"],
+["PPWSA-0003","ម៉ម ដារ៉ា","MOM DARA","ប្រុស",33,"ប្រធានការិយាល័យ","ការិយាល័យផលិតកម្ម","ក្របខណ្ឌ","បរិញ្ញាបត្រវិស្វកម្ម","012 000 003","9"],
+["PPWSA-0004","លី ស្រីល័ក្ខ","LY SREYLEAK","ស្រី",29,"បុគ្គលិករដ្ឋបាល","រដ្ឋបាល","ក្របខណ្ឌ","បរិញ្ញាបត្រ","012 000 004","5"],
+["PPWSA-0005","គឹម សុវណ្ណ","KIM SOVANN","ប្រុស",45,"អ្នកបច្ចេកទេស","ការិយាល័យយន្តសាស្ត្រ និងអគ្គិសនី","ក្របខណ្ឌ","បរិញ្ញាបត្ររង","012 000 005","20"],
+["PPWSA-0006","នួន ចាន់ថា","NOUN CHANTHA","ស្រី",31,"អ្នកវិភាគគុណភាពទឹក","ការិយាល័យពិសោធន៍ទឹក","ក្របខណ្ឌ","បរិញ្ញាបត្រ","012 000 006","7"],
+["PPWSA-0007","ហេង រតនា","HENG RATANA","ប្រុស",38,"អ្នកគ្រប់គ្រងប្រព័ន្ធ","ការិយាល័យផលិតកម្ម","ក្របខណ្ឌ","បរិញ្ញាបត្រ","012 000 007","11"],
+["PPWSA-C-0008","ឈួន មុន្នី","CHHOUN MONY","ស្រី",26,"ជំនួយការ","ការិយាល័យពិសោធន៍ទឹក","កិច្ចសន្យា","បរិញ្ញាបត្រ","012 000 008","2"],
+["PPWSA-C-0009","ពៅ សម្បត្តិ","POV SAMBO","ប្រុស",27,"អ្នកបច្ចេកទេស","ការិយាល័យយន្តសាស្ត្រ និងអគ្គិសនី","កិច្ចសន្យា","បរិញ្ញាបត្ររង","012 000 009","3"],
+["PPWSA-0010","អ៊ុំ សុធា","OUM SOTHEA","ប្រុស",52,"អ្នកបច្ចេកទេសជាន់ខ្ពស់","ការិយាល័យផលិតកម្ម","ក្របខណ្ឌ","មធ្យមសិក្សា","012 000 010","27"]];
+const L=[[3,"ឈប់សម្រាកប្រចាំឆ្នាំ","5–7 វិច្ឆិកា · 3 ថ្ងៃ","wa"],[7,"ឈប់ឈឺ","6 វិច្ឆិកា · 1 ថ្ងៃ","wa"],[1,"បេសកកម្ម","10–11 វិច្ឆិកា · 2 ថ្ងៃ","ok"],[5,"ឈប់មានធុរៈផ្ទាល់ខ្លួន","12 វិច្ឆិកា · 1 ថ្ងៃ","wa"]];
+const V=[["home","🏠","ទិដ្ឋភាពទូទៅ"],["staff","👥","និយោជិត"],["attend","🕒","វត្តមាន"],["leave","📅","ច្បាប់ឈប់"],["remind","🔔","ការរំលឹក"],["train","🎓","បណ្តុះបណ្តាល"],["perf","📈","វាយតម្លៃ"],["org","🧭","រចនាសម្ព័ន្ធ"],["docs","📎","ឯកសារ"],["access","🔐","សិទ្ធិ & Audit"]];
+const R={"អ្នកគ្រប់គ្រង HR":{v:["home","staff","org","attend","leave","remind","train","perf","docs","access"],ap:1,ph:1},"ប្រធានផ្នែក":{v:["home","staff","org","attend","leave","remind","train","perf","docs"],ap:1,ph:0},"និយោជិត":{v:["home","org","leave","train","docs"],ap:0,ph:0}};
+let role="អ្នកគ្រប់គ្រង HR",cur="home",sel=0;
+const LOG=[["05 វិច្ឆិកា 08:12","អ្នកគ្រប់គ្រង HR","ចូលប្រព័ន្ធ"],["05 វិច្ឆិកា 07:50","ប្រធានផ្នែក","អនុម័តច្បាប់ ពៅ សម្បត្តិ"],["04 វិច្ឆិកា 16:40","អ្នកគ្រប់គ្រង HR","កែប្រវត្តិរូប ម៉ម ដារ៉ា"],["04 វិច្ឆិកា 10:05","អ្នកគ្រប់គ្រង HR","បង្ហោះឯកសារកិច្ចសន្យា ឈួន មុន្នី"]];
+const log=a=>{LOG.unshift(["05 វិច្ឆិកា "+new Date().toTimeString().slice(0,5),role,a])};
+const EX={};
+const NAV_GROUPS=[
+["OVERVIEW",["home"]],
+["PEOPLE",["staff","org"]],
+["HR OPERATIONS",["attend","leave","remind"]],
+["DEVELOPMENT",["train","perf"]],
+["SYSTEM",["docs","access"]]
+];
+const nav=()=>{
+ const allowed=V.filter(v=>R[role].v.includes(v[0]));
+ $("#nav").innerHTML=NAV_GROUPS.map(([label,keys])=>{
+   const items=allowed.filter(v=>keys.includes(v[0]));
+   return items.length?`<div class="nav-group">${label}</div>${items.map(v=>`<button data-k="${v[0]}" title="${v[2]}"><span>${v[1]}</span><span>${v[2]}</span></button>`).join("")}`:"";
+ }).join("");
+};nav();
+$("#role").innerHTML=Object.keys(R).map(r=>`<option>${r}</option>`).join("");
+$("#role").onchange=e=>{role=e.target.value;log("ប្តូរតួនាទីទៅ "+role);sel=role==="និយោជិត"?3:0;nav();go(R[role].v.includes(cur)?cur:"home")};
+$("#nav").onclick=e=>{const b=e.target.closest("button");if(b)go(b.dataset.k)};
+function go(k){cur=k;document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));$("#ttl").textContent=V.find(v=>v[0]===k)[2];$("#v").onclick=null;({home,staff,leave:leaveCal,attend,remind,train,perf,org,docs,access})[k]()}
+function home(){
+ const F=P.filter(p=>p[3]==="ស្រី").length;
+ const C=P.filter(p=>p[7]==="កិច្ចសន្យា").length;
+ const m={};P.forEach(p=>m[p[6]]=(m[p[6]]||0)+1);
+ const e=Object.entries(m).sort((a,b)=>b[1]-a[1]),mx=e[0][1];
+ const active=P.length,attendance=90;
+ const stats=[
+  ["និយោជិតសរុប",active,"👥","ទិន្នន័យ Demo"],
+  ["និយោជិតស្រី",F,"♀","សមាមាត្រតាមទិន្នន័យគំរូ"],
+  ["និយោជិតកិច្ចសន្យា",C,"📄","ត្រូវតាមដានថ្ងៃផុតកំណត់"],
+  ["អត្រាវត្តមាន",attendance+"%","◷","សូចនាករគំរូប្រចាំថ្ងៃ"]
+ ];
+ $("#v").innerHTML=`
+ <div class="dash-head">
+  <div><h2>សង្ខេបព័ត៌មានធនធានមនុស្ស</h2><p>ទិដ្ឋភាពទូទៅ និងសូចនាករសំខាន់ៗរបស់ PRD-HR</p></div>
+  <span class="chip">DEMO DATA · 05 វិច្ឆិកា 2026</span>
+ </div>
+ <div class="dash-kpis">${stats.map(s=>`<div class="glass stat"><div class="stat-icon">${s[2]}</div><div class="k">${s[0]}</div><div class="v">${s[1]}</div><div class="stat-note">${s[3]}</div></div>`).join("")}</div>
+ <div class="dash-panels">
+  <div class="glass dash-panel">
+   <h3>និយោជិតតាមការិយាល័យ</h3>
+   <div class="panel-sub">ចំនួនបុគ្គលិកបែងចែកតាមអង្គភាព · ${active} នាក់</div>
+   ${e.map(([k,v])=>`<div class="dept-row"><span>${k}</span><div class="dept-track"><i style="width:${v/mx*100}%"></i></div><span class="dept-count">${v}</span></div>`).join("")}
+   <div style="border-top:1px solid #e2e8f0;margin-top:18px;padding-top:13px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+    <span class="sub" style="font-size:.72rem">ស្រី ${F} នាក់ · ប្រុស ${active-F} នាក់</span>
+    <span class="sub" style="font-size:.72rem">កិច្ចសន្យា ${C} នាក់</span>
+   </div>
+  </div>
+  <div class="glass dash-panel">
+   <h3>ការជូនដំណឹង និងការតាមដាន</h3>
+   <div class="panel-sub">ចំណុចដែល HR គួរយកចិត្តទុកដាក់</div>
+   <div class="dash-alert"><span class="alert-ico">🎂</span><div><b>ខួបកំណើតនាពេលខាងមុខ</b><div class="sub">ហេង រតនា · ៩ វិច្ឆិកា</div></div></div>
+   <div class="dash-alert"><span class="alert-ico">🪪</span><div><b>បណ្ណសម្គាល់ខ្លួនជិតផុតកំណត់</b><div class="sub">មាន ៣ ករណីត្រូវពិនិត្យ</div></div><span class="chip wa">៣</span></div>
+   <div class="dash-alert"><span class="alert-ico">📄</span><div><b>កិច្ចសន្យាជិតផុតកំណត់</b><div class="sub">មាន ២ ករណីត្រូវតាមដាន</div></div><span class="chip wa">២</span></div>
+   <div class="dash-alert"><span class="alert-ico">🏅</span><div><b>ជិតចូលនិវត្តន៍ឆ្នាំក្រោយ</b><div class="sub">មាន ១ ករណី</div></div></div>
+  </div>
+  <div class="glass dash-panel">
+   <h3>សកម្មភាពរហ័ស</h3>
+   <div class="panel-sub">ចូលទៅកាន់មុខងារដែលប្រើញឹកញាប់</div>
+   <div class="quick-grid">
+    <div class="quick-link" data-go="staff"><span>＋</span>បញ្ជីនិយោជិត</div>
+    <div class="quick-link" data-go="leave"><span>📅</span>គ្រប់គ្រងច្បាប់</div>
+    <div class="quick-link" data-go="attend"><span>◷</span>ត្រួតពិនិត្យវត្តមាន</div>
+    <div class="quick-link" data-go="docs"><span>📎</span>ឯកសារបុគ្គលិក</div>
+   </div>
+  </div>
+  <div class="glass dash-panel">
+   <h3>សកម្មភាពថ្មីៗ</h3>
+   <div class="panel-sub">ប្រវត្តិសកម្មភាពគំរូក្នុងប្រព័ន្ធ</div>
+   <div class="dash-activity"><span class="activity-dot"></span><div><b>អនុម័តសំណើច្បាប់ឈប់សម្រាក</b><div class="sub">ប្រធានផ្នែក · ពៅ សម្បត្តិ</div><div class="activity-time">ថ្ងៃនេះ · ០៧:៥០</div></div></div>
+   <div class="dash-activity"><span class="activity-dot"></span><div><b>កែប្រែព័ត៌មាននិយោជិត</b><div class="sub">អ្នកគ្រប់គ្រង HR · ម៉ម ដារ៉ា</div><div class="activity-time">ម្សិលមិញ · ១៦:៤០</div></div></div>
+   <div class="dash-activity"><span class="activity-dot"></span><div><b>បញ្ចូលឯកសារកិច្ចសន្យា</b><div class="sub">អ្នកគ្រប់គ្រង HR · ឈួន មុន្នី</div><div class="activity-time">ម្សិលមិញ · ១០:០៥</div></div></div>
+  </div>
+ </div>`;
+ $("#v").querySelectorAll("[data-go]").forEach(el=>el.onclick=()=>go(el.dataset.go));
+}
+function staff(){const secs=[...new Set(P.map(p=>p[6]))];
+$("#v").innerHTML=`<div class="tools"><input id="q" placeholder="ស្វែងរក ឈ្មោះ / កូដ / តួនាទី…"><select id="s"><option value="">ការិយាល័យទាំងអស់</option>${secs.map(s=>`<option>${s}</option>`).join("")}</select></div>
+<div class="glass tw"><table><thead><tr><th>និយោជិត</th><th>កូដ</th><th>តួនាទី</th><th>ការិយាល័យ</th><th>ប្រភេទ</th></tr></thead><tbody id="tb"></tbody></table></div>`;
+const d=()=>{const q=$("#q").value.toLowerCase(),s=$("#s").value;
+$("#tb").innerHTML=P.map((p,i)=>[p,i]).filter(([p])=>(!s||p[6]===s)&&(!q||p.join(" ").toLowerCase().includes(q))).map(([p,i])=>`<tr data-i="${i}"><td><span class="av">${p[1][0]}</span>${p[1]}</td><td>${p[0]}</td><td>${p[5]}</td><td>${p[6]}</td><td><span class="chip ${p[7]==="កិច្ចសន្យា"?"wa":""}">${p[7]}</span></td></tr>`).join("")};
+$("#q").oninput=$("#s").oninput=d;d();
+$("#tb").onclick=e=>{const r=e.target.closest("tr");if(!r)return;const p=P[r.dataset.i];
+$("#dc").innerHTML=`<h2 style="margin:0">${p[1]}</h2><div class="sub">${p[2]} · ${p[0]}</div><dl><dt>ភេទ</dt><dd>${p[3]}</dd><dt>អាយុ</dt><dd>${p[4]} ឆ្នាំ</dd><dt>តួនាទី</dt><dd>${p[5]}</dd><dt>ការិយាល័យ</dt><dd>${p[6]}</dd><dt>ក្របខណ្ឌ</dt><dd>${p[7]}</dd><dt>កម្រិតវប្បធម៌</dt><dd>${p[8]}</dd><dt>ទូរស័ព្ទ</dt><dd>${R[role].ph?p[9]:p[9].slice(0,3)+" ••• •••"}</dd><dt>អតីតភាពការងារ</dt><dd>${p[10]} ឆ្នាំ</dd></dl>`;log("មើលប្រវត្តិរូប "+p[1]);$("#dg").showModal()}}
+function leave(){$("#v").innerHTML=`<div class="glass pan"><h3>សំណើច្បាប់ឈប់សម្រាក</h3>${L.map((l,i)=>!R[role].ap&&l[0]!==3?"":`<div class="lv" id="l${i}"><div><b>${P[l[0]][1]}</b><br><small>${l[1]} · ${l[2]}</small></div><div id="a${i}"><span class="chip ${l[3]}">${l[3]==="ok"?"អនុម័តរួច":"រង់ចាំ"}</span> ${l[3]==="ok"||!R[role].ap?"":`<button class="btn" data-i="${i}" data-r="1">អនុម័ត</button> <button class="btn no" data-i="${i}" data-r="0">បដិសេធ</button>`}</div></div>`).join("")}</div>`;
+$("#v").onclick=e=>{const b=e.target.closest(".btn");if(!b)return;const ok=b.dataset.r==="1";log((ok?"អនុម័ត":"បដិសេធ")+"ច្បាប់ "+P[L[b.dataset.i][0]][1]);$("#a"+b.dataset.i).innerHTML=`<span class="chip ${ok?"ok":"er"}">${ok?"អនុម័តរួច":"បានបដិសេធ"}</span>`}}
+function attend(){const A=[["ម","06:52"],["ម","06:58"],["ម","07:05"],["ឈ","—"],["ម","06:47"],["យ","07:34"],["ឈ","—"],["ម","06:55"],["យ","07:21"],["ប","—"]];
+const N={"ម":["មកធ្វើការ","ok"],"យ":["មកយឺត","wa"],"ឈ":["ឈប់សម្រាក","er"],"ប":["បេសកកម្ម",""]};
+const c=k=>A.filter(a=>a[0]===k).length,wk=[96,92,95,90,94,97,93];
+$("#v").innerHTML=`<div class="grid">${[["មកធ្វើការ",c("ម")],["មកយឺត",c("យ")],["ឈប់សម្រាក",c("ឈ")],["បេសកកម្ម",c("ប")]].map(s=>`<div class="glass stat"><div class="k">${s[0]}</div><div class="v">${s[1]}</div></div>`).join("")}</div>
+<div class="two"><div class="glass pan tw"><h3>វត្តមានថ្ងៃនេះ</h3><table><thead><tr><th>និយោជិត</th><th>ម៉ោងចូល</th><th>ស្ថានភាព</th></tr></thead><tbody>${P.map((p,i)=>`<tr style="cursor:default"><td><span class="av">${p[1][0]}</span>${p[1]}</td><td>${A[i][1]}</td><td><span class="chip ${N[A[i][0]][1]}">${N[A[i][0]][0]}</span></td></tr>`).join("")}</tbody></table></div>
+<div class="glass pan"><h3>អត្រាវត្តមាន 7 ថ្ងៃចុងក្រោយ (%)</h3>${["ច","អ","ព","ព្រ","សុ","ស","អា"].map((d,i)=>`<div class="bar"><span>${d}</span><i style="width:${wk[i]}%"></i><span>${wk[i]}</span></div>`).join("")}</div></div>`}
+function remind(){const cl=d=>d<=30?"er":d<=90?"wa":"ok";
+const G=[["📄 កិច្ចសន្យាជិតផុតកំណត់",[[7,"កិច្ចសន្យាផុត 30 វិច្ឆិកា",25],[8,"កិច្ចសន្យាផុត 20 កុម្ភៈ",107]]],["🪪 បណ្ណ ID ជិតផុតកំណត់",[[2,"ID ផុត 15 វិច្ឆិកា",10],[5,"ID ផុត 12 មករា",68],[9,"ID ផុត 03 មីនា",118]]],["🛡️ វិញ្ញាបនបត្រសុវត្ថិភាពជិតផុត",[[4,"អគ្គិសនីតង់ស្យុងខ្ពស់ ផុត 18 វិច្ឆិកា",13],[9,"ប្រតិបត្តិការបូមទឹក ផុត 05 កុម្ភៈ",92]]]];
+$("#v").innerHTML=`<div class="two">${G.map(g=>`<div class="glass pan"><h3>${g[0]}</h3>${g[1].map(r=>`<div class="ev"><span class="av">${P[r[0]][1][0]}</span><span style="flex:1">${P[r[0]][1]}<br><small class="sub">${r[1]}</small></span><span class="chip ${cl(r[2])}">${r[2]} ថ្ងៃ</span></div>`).join("")}</div>`).join("")}</div>`}
+function train(){const T=[[0,"ភាពជាអ្នកដឹកនាំ",32],[2,"ការគ្រប់គ្រងរោងចក្រទឹក",40],[3,"ការគ្រប់គ្រងឯកសារ",18],[4,"សុវត្ថិភាពអគ្គិសនី",36],[5,"វិភាគគុណភាពទឹក ISO 17025",28],[6,"ប្រព័ន្ធ SCADA",22],[7,"ការណែនាំបុគ្គលិកថ្មី",8],[9,"សុវត្ថិភាពការងារ",40]];
+$("#v").innerHTML=`<div class="glass pan"><h3>ម៉ោងបណ្តុះបណ្តាលឆ្នាំ 2026 (គោលដៅ 40 ម៉ោង)</h3>${T.map(t=>`<div class="bar" style="grid-template-columns:minmax(110px,30%) 1fr 56px"><span>${P[t[0]][1]}<br><small class="sub">${t[1]}</small></span><i style="width:${t[2]/40*100}%"></i><span>${t[2]} ម៉ោង</span></div>`).join("")}</div>`}
+function perf(){const K=[[4.5,4,5,4.5],[4,4.5,4,4],[4.5,4.5,4,4.5],[3.5,4,4,4],[4,3.5,4.5,3.5],[4.5,4.5,4,4],[4,4,4.5,4.5],[3.5,3,4,4],[3.5,4,3.5,3],[4,4.5,5,4]];
+const W=[.4,.2,.2,.2],C=["គុណភាពការងារ (40%)","វត្តមាន (20%)","សុវត្ថិភាព (20%)","ការងារជាក្រុម (20%)"];
+const S=K.map(k=>k.reduce((a,v,i)=>a+v*W[i],0)),G=s=>s>=4.3?["ល្អប្រសើរ","ok"]:s>=3.7?["ល្អ",""]:["ត្រូវកែលម្អ","wa"];
+const avg=S.reduce((a,b)=>a+b,0)/S.length;
+$("#v").innerHTML=`<div class="grid">${[["ពិន្ទុមធ្យម",avg.toFixed(2)+" / 5"],["ល្អប្រសើរ",S.filter(s=>s>=4.3).length],["ត្រូវកែលម្អ",S.filter(s=>s<3.7).length]].map(s=>`<div class="glass stat"><div class="k">${s[0]}</div><div class="v">${s[1]}</div></div>`).join("")}</div>
+<div class="glass tw"><table><thead><tr><th>និយោជិត</th><th>តួនាទី</th><th>ពិន្ទុ KPI</th><th>លទ្ធផល</th></tr></thead><tbody id="tb">${P.map((p,i)=>`<tr data-i="${i}"><td><span class="av">${p[1][0]}</span>${p[1]}</td><td>${p[5]}</td><td>${S[i].toFixed(2)}</td><td><span class="chip ${G(S[i])[1]}">${G(S[i])[0]}</span></td></tr>`).join("")}</tbody></table></div>`;
+$("#tb").onclick=e=>{const r=e.target.closest("tr");if(!r)return;const i=r.dataset.i;
+$("#dc").innerHTML=`<h2 style="margin:0">${P[i][1]}</h2><div class="sub">វាយតម្លៃប្រចាំឆ្នាំ 2026 · ${S[i].toFixed(2)} / 5</div><div style="margin-top:12px">${C.map((c,j)=>`<div class="bar" style="grid-template-columns:minmax(110px,40%) 1fr 30px"><span>${c}</span><i style="width:${K[i][j]/5*100}%"></i><span>${K[i][j]}</span></div>`).join("")}</div>`;log("មើលការវាយតម្លៃ "+P[i][1]);$("#dg").showModal()}}
+function org(){const o={};P.forEach(p=>(o[p[6]]=o[p[6]]||[]).push(p));
+$("#v").innerHTML=`<div class="glass pan" style="text-align:center"><span class="chip">${P[0][5]}</span><br><b>${P[0][1]}</b><div class="sub">នាយកដ្ឋាន · អនុប្រធាន៖ ${P[1][1]}</div></div><div class="two" style="margin-top:12px">${Object.entries(o).filter(([k])=>k!=="នាយកដ្ឋាន").map(([k,a])=>`<div class="glass pan"><h3>${k} <span class="chip">${a.length}</span></h3>${a.map(p=>`<div class="ev"><span class="av">${p[1][0]}</span><span>${p[1]}<br><small class="sub">${p[5]}</small></span></div>`).join("")}</div>`).join("")}</div>`}
+function docs(){const own=role==="និយោជិត",DT=[["🪪","អត្តសញ្ញាណប័ណ្ណ"],["📄","ប្រវត្តិរូប (CV)"],["🎓","សញ្ញាបត្រ"],["📑","កិច្ចសន្យា / សេចក្តីសម្រេចតែងតាំង"],["🛡️","វិញ្ញាបនបត្រសុវត្ថិភាព"]],ST={ok:"ត្រឹមត្រូវ",wa:"ជិតផុត",er:"ខ្វះ"};
+const draw=()=>{const L2=DT.map((d,j)=>{const s=(sel+j)%7===0?"er":(sel+j)%5===0?"wa":"ok";return[d[0],d[1],s]}).concat((EX[sel]||[]).map(f=>["📎",f,"ok"]));
+$("#dl").innerHTML=L2.map(d=>`<div class="ev"><span>${d[0]}</span><span style="flex:1">${d[1]}</span><span class="chip ${d[2]}">${ST[d[2]]}</span></div>`).join("")};
+$("#v").innerHTML=`<div class="tools">${own?`<b style="padding:8px 0">${P[sel][1]}</b>`:`<select id="es">${P.map((p,i)=>`<option value="${i}" ${i===sel?"selected":""}>${p[1]}</option>`).join("")}</select>`}<input type="file" id="up"></div><div class="glass pan"><h3>ឯកសារភ្ជាប់</h3><div id="dl"></div></div>`;
+if(!own)$("#es").onchange=e=>{sel=+e.target.value;log("បើកឯកសារ "+P[sel][1]);draw()};
+$("#up").onchange=e=>{const f=e.target.files[0];if(!f)return;(EX[sel]=EX[sel]||[]).push(f.name);log("បង្ហោះឯកសារ "+f.name+" ("+P[sel][1]+")");draw()};draw()}
+function access(){const F=[["មើលព័ត៌មានទូរស័ព្ទពេញ","ph"],["អនុម័ត / បដិសេធច្បាប់","ap"]],Y=r=>r?"✅":"—";
+$("#v").innerHTML=`<div class="two"><div class="glass pan tw"><h3>ការកំណត់សិទ្ធិតាមតួនាទី</h3><table class="mx"><thead><tr><th>សិទ្ធិ</th>${Object.keys(R).map(r=>`<th>${r}</th>`).join("")}</tr></thead><tbody>${F.map(f=>`<tr style="cursor:default"><td>${f[0]}</td>${Object.values(R).map(r=>`<td>${Y(r[f[1]])}</td>`).join("")}</tr>`).join("")}<tr style="cursor:default"><td>មើលម៉ូឌុលសិទ្ធិ & Audit</td>${Object.values(R).map(r=>`<td>${Y(r.v.includes("access"))}</td>`).join("")}</tr><tr style="cursor:default"><td>ចំនួនម៉ូឌុលដែលមើលបាន</td>${Object.values(R).map(r=>`<td>${r.v.length}</td>`).join("")}</tr></tbody></table><p class="sub">សាកល្បង៖ ប្តូរតួនាទីនៅជ្រុងខាងលើស្តាំ រួចសាកល្បងអនុម័តច្បាប់ ឬមើលប្រវត្តិរូប។</p></div>
+<div class="glass pan tw"><h3>Audit Log</h3><table><thead><tr><th>ពេលវេលា</th><th>អ្នកប្រើ</th><th>សកម្មភាព</th></tr></thead><tbody>${LOG.slice(0,15).map(l=>`<tr style="cursor:default"><td>${l[0]}</td><td>${l[1]}</td><td>${l[2]}</td></tr>`).join("")}</tbody></table></div></div>`}
+const MN=["មករា","កុម្ភៈ","មីនា","មេសា","ឧសភា","មិថុនា","កក្កដា","សីហា","កញ្ញា","តុលា","វិច្ឆិកា","ធ្នូ"],AN="ប្រចាំឆ្នាំ",QUOTA=18,TY=[AN,"ឈឺ","មាតុភាព","បេសកកម្ម","ធុរៈផ្ទាល់ខ្លួន"];
+const LR=[{p:3,t:AN,f:"2026-11-04",e:"2026-11-06",s:"wa",r:"ទៅជួបគ្រួសារនៅខេត្ត"},{p:7,t:"ឈឺ",f:"2026-11-06",e:"2026-11-06",s:"wa",r:""},{p:1,t:"បេសកកម្ម",f:"2026-11-10",e:"2026-11-11",s:"ok",r:""},{p:5,t:"ធុរៈផ្ទាល់ខ្លួន",f:"2026-11-12",e:"2026-11-12",s:"wa",r:""},{p:2,t:AN,f:"2026-11-23",e:"2026-11-27",s:"ok",r:""}];
+const USED=[10,16,8,17,5,12,9,3,2,18];let cm=[2026,10];
+const wd=(f,e)=>{let n=0;for(let d=new Date(f);d<=new Date(e);d.setUTCDate(d.getUTCDate()+1)){const g=d.getUTCDay();if(g&&g<6)n++}return n};
+function leaveCal(){const ap=R[role].ap,vis=LR.filter(l=>ap||l.p===3);
+const used=p=>USED[p]+LR.filter(l=>l.p===p&&l.t===AN&&l.s!=="er").reduce((a,l)=>a+wd(l.f,l.e),0);
+const Y=cm[0],M=cm[1],first=new Date(Date.UTC(Y,M,1)).getUTCDay(),dim=new Date(Date.UTC(Y,M+1,0)).getUTCDate();
+const iso=d=>Y+"-"+String(M+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+const on=d=>vis.filter(l=>l.s!=="er"&&l.f<=iso(d)&&iso(d)<=l.e);
+let c=["អា","ច","អ","ព","ព្រ","សុ","ស"].map(h=>`<div class="h">${h}</div>`).join("");for(let i=0;i<first;i++)c+="<div></div>";
+for(let d=1;d<=dim;d++){const a=on(d),g=(first+d-1)%7;c+=`<div class="cd${g%6===0?" we":""}${Y===2026&&M===10&&d===5?" td":""}" data-d="${d}"><b>${d}</b>${a.slice(0,2).map(l=>`<span class="chip ${l.s}">${P[l.p][1].split(" ").pop()}</span>`).join("")}${a.length>2?`<small>+${a.length-2}</small>`:""}</div>`}
+const ppl=ap?P.map((p,i)=>i):[3],pend=LR.map((l,i)=>[l,i]).filter(([l])=>l.s==="wa"&&(ap||l.p===3));
+$("#v").innerHTML=`<div class="two" style="grid-template-columns:repeat(auto-fit,minmax(320px,1.6fr))"><div class="glass pan"><div class="top" style="margin:0 0 8px"><button class="x" id="pm">‹</button><h3 style="margin:0">${MN[M]} ${Y}</h3><button class="x" id="nm">›</button></div><div class="cal">${c}</div><div class="sub" style="margin-top:8px"><span class="chip ok">អនុម័ត</span> <span class="chip wa">រង់ចាំ</span> · ចុចលើថ្ងៃដើម្បីមើលអ្នកឈប់</div></div>
+<div class="glass pan"><h3>សមតុល្យច្បាប់ប្រចាំឆ្នាំ (កូតា ${QUOTA} ថ្ងៃ/ឆ្នាំ)</h3>${ppl.map(i=>{const u=used(i);return `<div class="bar" style="grid-template-columns:minmax(100px,34%) 1fr 56px"><span>${P[i][1]}</span><i style="width:${Math.min(u/QUOTA*100,100)}%${u>QUOTA?";background:var(--er)":""}"></i><span>${u}/${QUOTA}</span></div>`}).join("")}</div></div>
+<div class="two" style="margin-top:12px"><div class="glass pan"><h3>ស្នើសុំច្បាប់ថ្មី</h3><div class="tools">${ap?`<select id="ep">${P.map((p,i)=>`<option value="${i}">${p[1]}</option>`).join("")}</select>`:""}<select id="lt">${TY.map(t=>`<option>${t}</option>`).join("")}</select><input type="date" id="lf" value="2026-11-16"><input type="date" id="le" value="2026-11-16"></div><textarea id="lr" placeholder="មូលហេតុ (ចាំបាច់ បើលើសកូតា ${QUOTA} ថ្ងៃ)" style="font:inherit;padding:8px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--gl);color:var(--tx);width:100%;min-height:60px"></textarea><div id="ht" class="sub" style="margin:8px 0"></div><button class="x" id="sb">ដាក់ស្នើ</button></div>
+<div class="glass pan"><h3>សំណើរង់ចាំអនុម័ត</h3>${pend.length?pend.map(([l,i])=>`<div class="lv"><div><b>${P[l.p][1]}</b> <span class="chip">${l.t}</span>${l.t===AN&&used(l.p)>QUOTA?` <span class="chip er">លើសកូតា ${used(l.p)-QUOTA} ថ្ងៃ</span>`:""}<br><small>${l.f} → ${l.e} · ${wd(l.f,l.e)} ថ្ងៃ${l.r?" · មូលហេតុ៖ "+l.r:""}</small></div><div>${ap?`<button class="btn" data-i="${i}" data-r="1">អនុម័ត</button> <button class="btn no" data-i="${i}" data-r="0">បដិសេធ</button>`:'<span class="chip wa">រង់ចាំ</span>'}</div></div>`).join(""):'<p class="sub">គ្មានសំណើរង់ចាំ</p>'}</div></div>`;
+$("#pm").onclick=()=>{cm=M?[Y,M-1]:[Y-1,11];leaveCal()};$("#nm").onclick=()=>{cm=M<11?[Y,M+1]:[Y+1,0];leaveCal()};
+const gv=()=>{const p=ap?+$("#ep").value:3,t=$("#lt").value,f=$("#lf").value,e=$("#le").value;return{p,t,f,e,n:f&&e&&e>=f?wd(f,e):0}};
+const ht=()=>{const v=gv(),u=used(v.p),nu=v.t===AN?u+v.n:u,over=v.t===AN&&nu>QUOTA;$("#ht").innerHTML=`ប្រើរួច ${u}/${QUOTA} ថ្ងៃ · ស្នើ ${v.n} ថ្ងៃធ្វើការ (ច–សុ)`+(v.t===AN?` · សរុបក្រោយស្នើ ${nu}/${QUOTA}`:"")+(over?` <span class="chip er">លើសកូតា ${nu-QUOTA} ថ្ងៃ — ត្រូវបញ្ជាក់មូលហេតុ</span>`:"");return{v,over}};
+["ep","lt","lf","le"].forEach(i=>{const el=$("#"+i);if(el)el.oninput=ht});ht();
+$("#sb").onclick=()=>{const{v,over}=ht(),r=$("#lr").value.trim();if(!v.n){$("#ht").innerHTML='<span class="chip er">សូមជ្រើសកាលបរិច្ឆេទឱ្យត្រឹមត្រូវ</span>';return}if(over&&!r){$("#ht").innerHTML+=' <span class="chip er">⚠ សូមបំពេញមូលហេតុ</span>';return}LR.push({p:v.p,t:v.t,f:v.f,e:v.e,s:"wa",r});log("ស្នើសុំច្បាប់ "+v.t+" ("+P[v.p][1]+")");leaveCal()};
+$("#v").onclick=e=>{const b=e.target.closest(".btn");if(b){const l=LR[b.dataset.i],ok=b.dataset.r==="1";l.s=ok?"ok":"er";log((ok?"អនុម័ត":"បដិសេធ")+"ច្បាប់ "+P[l.p][1]);leaveCal();return}
+const d=e.target.closest(".cd");if(d){const a=on(+d.dataset.d);$("#dc").innerHTML=`<h2 style="margin:0">${d.dataset.d} ${MN[M]} ${Y}</h2>${a.length?a.map(l=>`<div class="ev"><span class="av">${P[l.p][1][0]}</span><span style="flex:1">${P[l.p][1]}<br><small class="sub">${l.t}</small></span><span class="chip ${l.s}">${l.s==="ok"?"អនុម័ត":"រង់ចាំ"}</span></div>`).join(""):'<p class="sub">គ្មាននរណាឈប់ទេ</p>'}`;$("#dg").showModal()}}}
+go("home");
+</script></body></html>
